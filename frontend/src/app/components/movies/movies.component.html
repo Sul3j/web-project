@@ -1,0 +1,66 @@
+<section class="movies">
+    <div class="container">
+      <a href="#" class="btn btn-secondary btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal"><i-feather name="plus"></i-feather>Dodaj film</a>
+      <div class="row">
+        <div class="card col-12 col-md-6 col-lg-4" *ngFor="let movie of movies | async">
+          <img class="card-img-top movies-img" [src]="url + movie['filename']" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie["name"]}}</h5>
+            <p class="card-category">{{ movie["category"] }}</p>
+            <p class="card-text">{{ movie["description"]}}</p>
+            <div class="buttons">
+              <a class="btn btn-danger" (click)="deleteImage(movie['filename'])"><i-feather name="trash-2"></i-feather>Usuń</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel2">Dodaj film</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="uploadFile()">
+              <div class="modal-body">
+                  <div class="form-group">
+                    <input type="text" class="form-control input" placeholder="nazwa" formControlName="name" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input" placeholder="kategoria" formControlName="category" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control input" placeholder="opis" formControlName="description" required>
+                  </div>
+                  <img [src]="imagePath" class="photos__image" id="image" />
+              </div>
+              <div class="modal-footer">
+                <input
+                  class="btn btn-primary input"
+                  type="file"
+                  #fileUpload
+                  id="fileUpload"
+                  name="fileUpload"
+                  accept="image/"
+                  (change)="imageChange($event)"
+                  style="display: none"
+                />
+                <button
+                  type="button"
+                  (click)="upload()"
+                  class="btn btn-primary photos__button"
+                >
+                  Wybierz zdjęcie
+                </button>
+                <button class="btn btn-primary" type="submit">Dodaj film</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
